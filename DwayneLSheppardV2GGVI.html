@@ -34,7 +34,6 @@
         body {
             background-color: #f8f5f2;
             color: #2d3748;
-            overflow-x: hidden;
         }
         .chart-container {
             position: relative;
@@ -115,417 +114,384 @@
             letter-spacing: 2px;
             color: #2c3e50;
         }
-
-        /* Splash Page Styles */
-        #splash-screen {
-            transition: opacity 0.8s ease, visibility 0.8s;
-        }
-        .infinite-symbol {
-            font-size: 5rem;
-            line-height: 1;
-            color: #c05621;
-            animation: pulse-slow 3s infinite ease-in-out;
-        }
-        @keyframes pulse-slow {
-            0%, 100% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
-        }
     </style>
 
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
 <body class="font-sans antialiased min-h-screen flex flex-col">
 
-    <!-- PREFACE / SPLASH SCREEN -->
-    <div id="splash-screen" class="fixed inset-0 z-[200] bg-bg flex flex-col items-center justify-center p-6 text-center">
-        <div class="infinite-symbol mb-4">&infin;</div>
-        <h1 class="text-3xl md:text-5xl font-bold text-primary tracking-tighter mb-2">
-            THE <span class="text-accent italic">LIVING RESUME</span> OF<br>DWAYNE L. SHEPPARD 2026 (Now)
-        </h1>
-        <p class="text-sm md:text-lg text-gray-500 font-serif italic mb-12">
-            REST IN PEACE TO GIZMO THE INFINITE
-        </p>
-        <button onclick="enterApp()" class="bg-primary text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-black transition shadow-2xl transform hover:scale-105">
-            Enter the DRIP
-        </button>
-        <div class="mt-8 text-[10px] text-gray-400 uppercase tracking-widest">
-            V2G&trade; Systems Architecture | DRIP Certified
-        </div>
-    </div>
+    <!-- Header / Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex flex-col justify-center">
+                    <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Dwayne L. Sheppard</h1>
+                    <p class="text-xs text-accent font-semibold uppercase tracking-wider">Venomous2000 | Civic Intelligence Strategist</p>
+                </div>
+                
+                <nav class="hidden md:flex space-x-6">
+                    <button onclick="switchView('profile')" id="nav-profile" class="nav-item active px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">Identity</button>
+                    <button onclick="switchView('competencies')" id="nav-competencies" class="nav-item px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">Competencies</button>
+                    <button onclick="switchView('global')" id="nav-global" class="nav-item px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none tracking-tight">300 Water Bearers</button>
+                    <button onclick="switchView('ecosystem')" id="nav-ecosystem" class="nav-item px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">Ecosystem</button>
+                    <button onclick="switchView('digital')" id="nav-digital" class="nav-item px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">Digital & AI</button>
+                    <button onclick="switchView('ai-navigator')" id="nav-ai-navigator" class="nav-item px-1 pt-1 text-sm font-bold text-accent hover:text-orange-700 focus:outline-none">✨ AI Navigator</button>
+                </nav>
 
-    <!-- MAIN APP CONTENT (Hidden on Load) -->
-    <div id="main-content" class="opacity-0 invisible transition-opacity duration-1000">
-        <!-- Header / Navigation -->
-        <header class="bg-white shadow-sm sticky top-0 z-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-20 items-center">
-                    <div class="flex flex-col justify-center">
-                        <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Dwayne L. Sheppard</h1>
-                        <p class="text-xs text-accent font-semibold uppercase tracking-wider">Venomous2000 | Civic Intelligence Strategist</p>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-500 hover:text-gray-700 focus:outline-none p-2">
+                        <span class="text-2xl">☰</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button onclick="switchView('profile')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Identity</button>
+                <button onclick="switchView('competencies')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Competencies</button>
+                <button onclick="switchView('global')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">300 Water Bearers</button>
+                <button onclick="switchView('ecosystem')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Ecosystem</button>
+                <button onclick="switchView('digital')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Digital & AI</button>
+                <button onclick="switchView('ai-navigator')" class="block w-full text-left px-3 py-2 rounded-md text-base font-bold text-accent hover:bg-gray-50">✨ AI Navigator</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- VIEW 1: IDENTITY / PROFILE -->
+        <section id="view-profile" class="view-section">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden relative">
+                <!-- DRIP Seal -->
+                <div class="absolute top-6 right-6 z-10 hidden sm:block">
+                    <div class="drip-seal">
+                        <span>DRIP</span>
+                        Digital Resume<br>Interactive Portfolio
+                    </div>
+                </div>
+
+                <div class="p-8 md:p-12">
+                    <div class="uppercase tracking-wide text-sm text-secondary font-bold mb-2 flex items-center">
+                        Profile / Identity Statement
+                        <span class="ml-3 text-[10px] bg-gray-100 px-2 py-0.5 rounded text-gray-500 font-normal tracking-wider">DRIP CERTIFIED 2026</span>
+                    </div>
+                    <h2 class="block mt-1 text-3xl leading-tight font-bold text-gray-900 sm:text-4xl mb-6">
+                        Bridging Education, Culture, & <span class="text-accent">Civic Intelligence</span>.
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                        Dwayne L. Sheppard is a <strong>Civic Intelligence Strategist</strong> and <strong>Creative Systems Architect</strong> dedicated to building resilient communities and fostering global dialogue. As an <strong>AI & Digital Literacy Navigator</strong>, he leverages cultural systems—notably Hip-Hop—to bridge educational gaps. His work spans international cultural diplomacy, curriculum design, and the creation of comprehensive digital frameworks for the next generation of global citizens.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                        <div class="bg-gray-50 rounded-lg p-6 border-l-4 border-accent">
+                            <h3 class="font-bold text-gray-800 mb-2">The Mission</h3>
+                            <p class="text-sm text-gray-600">To translate cultural capital into measurable civic impact through structured creativity and advanced digital strategy.</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-6 border-l-4 border-secondary">
+                            <h3 class="font-bold text-gray-800 mb-2">The Method</h3>
+                            <p class="text-sm text-gray-600">Fusing the structured creativity of Hip-Hop with AI literacy and sustainability to drive community empowerment via V2G&trade; systems.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-900 px-8 py-6 text-white flex flex-col sm:flex-row justify-between items-center">
+                    <div>
+                        <p class="font-semibold text-lg">Director of Philanthropy and Global Partnerships (GVI)</p>
+                        <p class="text-gray-400 text-sm">Designated leadership for sustainable global impact, 2026</p>
+                    </div>
+                    <button onclick="switchView('ai-navigator')" class="mt-4 sm:mt-0 bg-accent hover:bg-orange-700 text-white font-bold py-2 px-6 rounded-full transition duration-300 shadow-lg transform hover:-translate-y-1">
+                        ✨ Consult BALANCER-11
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <a href="https://www.youtube.com/watch?v=WNX4u5Zl-y4&t=50s" target="_blank" class="card bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center block hover:border-accent group">
+                    <div class="text-4xl mb-3">🌍</div>
+                    <h3 class="font-bold text-lg mb-2 group-hover:text-accent">Global HipHop Ambassador</h3>
+                    <p class="text-sm text-gray-500">Connecting global landscapes through the high-value literacy of HipHop culture.</p>
+                </a>
+                <a href="https://www.youtube.com/shorts/wO4YUVy8ICU" target="_blank" class="card bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center block hover:border-accent group">
+                    <div class="text-4xl mb-3">💧</div>
+                    <h3 class="font-bold text-lg mb-2 group-hover:text-accent">300 Water Bearers</h3>
+                    <p class="text-sm text-gray-500">A collective movement to bring water to global landscapes one by one.</p>
+                </a>
+                <a href="https://www.theinvenitycosmic.com" target="_blank" class="card bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center block hover:border-accent group">
+                    <div class="text-4xl mb-3">🤖</div>
+                    <h3 class="font-bold text-lg mb-2 group-hover:text-accent">AI Navigator</h3>
+                    <p class="text-sm text-gray-500">Creator of The Invenity Cosmic Universe for AI and digital literacy.</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- VIEW 2: CORE COMPETENCIES -->
+        <section id="view-competencies" class="view-section hidden">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 leading-tight">Strategic Value Matrix</h2>
+                <p class="mt-2 text-gray-600 max-w-3xl">
+                    What Mr. Sheppard brings to the table goes beyond skills—it is **Strategic Translation**. For companies and institutions, this synthesis creates high-level cultural equity and operational resilience.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-7 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="text-lg font-bold text-primary mb-4 flex items-center">
+                        <span class="mr-2">📈</span> Market Impact & Strategic Horizon Map
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-4 italic text-center">
+                        Values represent research-backed potential for corporate ESG, Market Penetration, and Future-Proofing.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-5 space-y-4">
+                    <div id="value-box" class="bg-primary text-white p-6 rounded-2xl shadow-lg border-l-8 border-accent transition-all duration-500 min-h-[300px] flex flex-col justify-center">
+                        <h3 class="text-xl font-bold mb-4" id="v-title">Select a Core Competency</h3>
+                        <div id="v-content" class="space-y-4">
+                            <p class="text-sm text-gray-300">Click or hover on a competency list item to see how Dwayne's current work translates to corporate value and potential scale.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-8">
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:border-accent group transition" onmouseover="updateValue(0)" onclick="updateValue(0)">
+                    <h4 class="font-bold text-sm text-gray-800 group-hover:text-accent">Civic Strategy</h4>
+                </div>
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:border-accent group transition" onmouseover="updateValue(1)" onclick="updateValue(1)">
+                    <h4 class="font-bold text-sm text-gray-800 group-hover:text-accent">AI Literacy</h4>
+                </div>
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:border-accent group transition" onmouseover="updateValue(2)" onclick="updateValue(2)">
+                    <h4 class="font-bold text-sm text-gray-800 group-hover:text-accent">Global Diplomacy</h4>
+                </div>
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:border-accent group transition" onmouseover="updateValue(3)" onclick="updateValue(3)">
+                    <h4 class="font-bold text-sm text-gray-800 group-hover:text-accent">Creative Systems</h4>
+                </div>
+                <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:border-accent group transition" onmouseover="updateValue(4)" onclick="updateValue(4)">
+                    <h4 class="font-bold text-sm text-gray-800 group-hover:text-accent">Curriculum Dev</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: GLOBAL REACH & 300 WATER BEARERS -->
+        <section id="view-global" class="view-section hidden">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 leading-tight">Global Reach & <span class="text-accent">The 300 Water Bearers</span></h2>
+                <p class="mt-2 text-gray-600 max-w-3xl">
+                    V is the 1st of 300 water bearers. We are bringing water to global landscapes one by one. Will you be one of the remaining 299?
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border-2 border-accent p-8 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 flex flex-col items-end space-y-2">
+                            <span class="bearer-badge text-white px-3 py-1 rounded-full text-xs font-bold uppercase">Mission: Nahuce</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">The Call to Action</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Become a tiered partner in the **GVI Collective** to tap into the works of V and the Global Village Initiative. Join the ranks of the 300 Water Bearers and support infrastructure required to bring clean water to landscapes in need.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                <h4 class="font-bold text-accent mb-1">Exclusive Content</h4>
+                                <p class="text-xs text-gray-500">Music, BTS imagery, and V2G&trade; field research from global tours.</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                <h4 class="font-bold text-secondary mb-1">The School That Never Closes</h4>
+                                <p class="text-xs text-gray-500">Access learning tools and civic intelligence frameworks.</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                <h4 class="font-bold text-highlight mb-1">Nahuce Updates</h4>
+                                <p class="text-xs text-gray-500">Direct communication on development progress in Nigeria.</p>
+                            </div>
+                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                <h4 class="font-bold text-primary mb-1">Impact Participation</h4>
+                                <p class="text-xs text-gray-500">Be part of the process as we build 1 x 1.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
+                            <a href="https://www.NAHUCEGVI.org" target="_blank" class="flex-grow text-center bearer-badge text-white py-4 rounded-xl font-bold text-lg hover:opacity-90 transition shadow-lg">
+                                LEARN MORE and FOLLOW &rarr;
+                            </a>
+                            <a href="https://www.youtube.com/shorts/wO4YUVy8ICU" target="_blank" class="sm:w-1/3 text-center bg-gray-900 text-white py-4 rounded-xl font-bold text-lg hover:bg-black transition shadow-lg flex items-center justify-center">
+                                <span class="mr-2">🎥</span> Watch
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Diplomatic Footprint</h3>
+                        <p class="text-sm text-gray-500 mb-6">Engagement intensity across the GVI network.</p>
+                        <div class="chart-container">
+                            <canvas id="globalChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="mt-6 p-4 bg-primary text-white rounded-xl">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium">Water Bearer Progress</span>
+                            <span class="text-xs opacity-75">1 / 300</span>
+                        </div>
+                        <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden">
+                            <div class="bg-accent h-full" style="width: 1%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 4: CREATIVE ECOSYSTEM -->
+        <section id="view-ecosystem" class="view-section hidden">
+            <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900">Creative Ecosystem</h2>
+                    <p class="mt-2 text-gray-600">
+                        A curated catalog of V2G&trade; architectural platforms, research series, and educational systems.
+                    </p>
+                </div>
+                <div class="mt-4 md:mt-0 flex space-x-2">
+                    <button onclick="filterProjects('all')" class="filter-btn active px-3 py-1 text-sm rounded-full bg-gray-800 text-white">All</button>
+                    <button onclick="filterProjects('system')" class="filter-btn px-3 py-1 text-sm rounded-full bg-white border border-gray-200 text-gray-600">Systems</button>
+                    <button onclick="filterProjects('media')" class="filter-btn px-3 py-1 text-sm rounded-full bg-white border border-gray-200 text-gray-600">Media</button>
+                    <button onclick="filterProjects('edu')" class="filter-btn px-3 py-1 text-sm rounded-full bg-white border border-gray-200 text-gray-600">Education</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="project-grid">
+                <!-- Projects injected via JS -->
+            </div>
+        </section>
+
+        <!-- VIEW 5: DIGITAL & AI -->
+        <section id="view-digital" class="view-section hidden">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900">Digital Literacy & AI</h2>
+                <p class="mt-2 text-gray-600 max-w-3xl">
+                    Documenting the results of digital consistency and AI advocacy using the V2G&trade; methodology.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-indigo-500">
+                    <div class="text-gray-500 text-sm font-medium uppercase">Monthly Impressions</div>
+                    <div class="text-4xl font-bold text-gray-900 mt-2">30,000+</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-pink-500">
+                    <div class="text-gray-500 text-sm font-medium uppercase">Engaged Followers</div>
+                    <div class="text-4xl font-bold text-gray-900 mt-2">2,500+</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-blue-500">
+                    <div class="text-gray-500 text-sm font-medium uppercase">Challenge</div>
+                    <div class="text-xl font-bold text-gray-900 mt-2">Metricool 365</div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">Growth Trajectory (365 Challenge)</h3>
+                <div class="chart-container">
+                    <canvas id="digitalChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 6: ✨ AI NAVIGATOR -->
+        <section id="view-ai-navigator" class="view-section hidden">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900">✨ AI Navigator</h2>
+                <p class="mt-2 text-gray-600 max-w-3xl">
+                    Interact with Dwayne L. Sheppard's body of work through **BALANCER-11**, generate custom civic intelligence strategies powered by <strong>Gemini 2.5</strong>.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Tool 1: Chat Assistant -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col h-[550px] ai-glow">
+                    <div class="p-4 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-2">🎙️</span>
+                            <div>
+                                <h3 class="font-bold text-gray-900">Ask BALANCER-11</h3>
+                                <p class="text-xs text-gray-500">Dwayne's AI Assistant</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold bg-accent text-white px-2 py-0.5 rounded-full uppercase">Powered by Gemini</span>
+                    </div>
+                    <div id="chat-box" class="flex-grow p-4 overflow-y-auto space-y-4 text-sm scroll-smooth">
+                        <div class="bg-gray-100 p-3 rounded-lg mr-8 leading-relaxed">
+                            I am **BALANCER-11**, the AI Assistant for Dwayne L. Sheppard. I am here to help you navigate his global tours, philanthropy, and V2G&trade; systems. <br><br>
+                            <span class="font-bold text-accent">Notice:</span> AI can experience errors. Please perform your own research and due diligence. All professional questions and strategic confirmations should be verified directly with **V** at <a href="https://www.v2gmultimedia.com/contact-me" target="_blank" class="underline hover:text-primary">v2gmultimedia.com/contact-me</a>.
+                        </div>
+                    </div>
+                    <div class="p-4 border-t border-gray-100 flex space-x-2">
+                        <input type="text" id="chat-input" placeholder="Consult BALANCER-11..." class="flex-grow border rounded-full px-4 py-2 focus:ring-2 focus:ring-accent outline-none text-sm">
+                        <button onclick="handleChat()" id="chat-btn" class="bg-accent text-white px-4 py-2 rounded-full font-bold hover:bg-orange-700 transition">Send</button>
+                    </div>
+                </div>
+
+                <!-- Tool 2: Architect Tool -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 ai-glow flex flex-col h-[550px]">
+                    <div class="mb-4">
+                        <h3 class="text-xl font-bold text-gray-900 flex items-center">
+                            <span class="mr-2">🧱</span> Civic Intelligence ✨ Architect
+                        </h3>
+                        <p class="text-sm text-gray-500">Describe a community challenge; BALANCER-11 will draft a strategy.</p>
+                    </div>
+                    <textarea id="architect-input" class="w-full border rounded-xl p-4 flex-grow mb-4 text-sm focus:ring-2 focus:ring-accent outline-none resize-none" placeholder="e.g. My neighborhood needs a way to engage youth in local history..."></textarea>
+                    
+                    <div class="flex space-x-2">
+                        <button onclick="handleArchitect()" id="architect-btn" class="flex-grow bg-primary text-white py-3 rounded-xl font-bold hover:bg-gray-800 transition shadow-md mb-4">
+                            ✨ Generate Strategy
+                        </button>
+                        <button onclick="generateSpitNarrative()" id="spit-btn" class="bg-accent text-white px-4 py-3 rounded-xl font-bold hover:bg-orange-700 transition shadow-md mb-4" title="Generate Moment to Spit Narrative">
+                            ✨ Spit
+                        </button>
+                    </div>
+
+                    <div id="architect-result" class="bg-gray-50 border rounded-xl p-4 overflow-y-auto max-h-40 text-sm hidden"></div>
+                    <div id="audio-container" class="mt-4 hidden">
+                         <button id="tts-play-btn" onclick="playCurrentNarrative()" class="w-full flex items-center justify-center bg-secondary text-white py-2 rounded-lg font-bold hover:bg-blue-700 transition">
+                             <span class="mr-2">🔊</span> ✨ Play Audio Vision
+                         </button>
+                         <audio id="tts-audio" class="hidden"></audio>
                     </div>
                     
-                    <nav class="hidden md:flex space-x-6">
-                        <button onclick="switchView('profile')" id="nav-profile" class="nav-item active px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">Identity</button>
-                        <button onclick="switchView('competencies')" id="nav-competencies" class="nav-item px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">Competencies</button>
-                        <button onclick="switchView('global')" id="nav-global" class="nav-item px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none tracking-tight">300 Water Bearers</button>
-                        <button onclick="switchView('ecosystem')" id="nav-ecosystem" class="nav-item px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">Ecosystem</button>
-                        <button onclick="switchView('digital')" id="nav-digital" class="nav-item px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">Digital & AI</button>
-                        <button onclick="switchView('ai-navigator')" id="nav-ai-navigator" class="nav-item px-1 pt-1 text-sm font-bold text-accent hover:text-orange-700 focus:outline-none">✨ AI Navigator</button>
-                    </nav>
-
-                    <div class="md:hidden flex items-center">
-                        <button id="mobile-menu-btn" class="text-gray-500 hover:text-gray-700 focus:outline-none p-2">
-                            <span class="text-2xl">☰</span>
-                        </button>
+                    <!-- AI Safety Disclaimer -->
+                    <div class="mt-4 p-3 bg-red-50 border border-red-100 rounded-lg text-[10px] text-red-800 leading-tight">
+                        <strong>AI & DUE DILIGENCE:</strong> BALANCER-11 is a generative tool and can produce errors. Do not rely solely on AI output for critical strategy. Verify all findings via <a href="https://www.v2gmultimedia.com/contact-me" target="_blank" class="font-bold underline">Official Contact</a>.
                     </div>
                 </div>
             </div>
-            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                    <button onclick="switchView('profile')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Identity</button>
-                    <button onclick="switchView('competencies')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Competencies</button>
-                    <button onclick="switchView('global')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">300 Water Bearers</button>
-                    <button onclick="switchView('ecosystem')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Ecosystem</button>
-                    <button onclick="switchView('digital')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50">Digital & AI</button>
-                    <button onclick="switchView('ai-navigator')" class="block w-full text-left px-3 py-2 rounded-md text-base font-bold text-accent hover:bg-gray-50">✨ AI Navigator</button>
-                </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl auto py-8 px-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="text-center md:text-left">
+                <p class="text-base text-gray-500">&copy; 2026 Dwayne L. Sheppard (Venomous2000). V2G&trade; Trademark.</p>
+                <p class="text-xs text-gray-400 uppercase tracking-widest flex items-center">
+                    Director of Philanthropy and Global Partnerships (GVI) 
+                    <span class="ml-2 border-l border-gray-300 pl-2">DRIP CERTIFIED</span>
+                </p>
             </div>
-        </header>
-
-        <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-
-            <!-- VIEW 1: IDENTITY / PROFILE -->
-            <section id="view-profile" class="view-section">
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden relative">
-                    <!-- DRIP Seal -->
-                    <div class="absolute top-6 right-6 z-10 hidden sm:block">
-                        <div class="drip-seal">
-                            <span>DRIP</span>
-                            Digital Resume<br>Interactive Portfolio
-                        </div>
-                    </div>
-
-                    <div class="p-8 md:p-12">
-                        <div class="uppercase tracking-wide text-sm text-secondary font-bold mb-2 flex items-center">
-                            Profile / Identity Statement
-                            <span class="ml-3 text-[10px] bg-gray-100 px-2 py-0.5 rounded text-gray-500 font-normal tracking-wider">DRIP CERTIFIED 2026</span>
-                        </div>
-                        <h2 class="block mt-1 text-3xl leading-tight font-bold text-gray-900 sm:text-4xl mb-6">
-                            Bridging Education, Culture, & <span class="text-accent">Civic Intelligence</span>.
-                        </h2>
-                        <p class="text-lg text-gray-600 mb-6 leading-relaxed">
-                            Dwayne L. Sheppard is a <strong>Civic Intelligence Strategist</strong> and <strong>Creative Systems Architect</strong> dedicated to building resilient communities and fostering global dialogue. As an <strong>AI & Digital Literacy Navigator</strong>, he leverages cultural systems—notably Hip-Hop—to bridge educational gaps. His work spans international cultural diplomacy, curriculum design, and the creation of comprehensive digital frameworks for the next generation of global citizens.
-                        </p>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                            <div class="bg-gray-50 rounded-lg p-6 border-l-4 border-accent">
-                                <h3 class="font-bold text-gray-800 mb-2">The Mission</h3>
-                                <p class="text-sm text-gray-600">To translate cultural capital into measurable civic impact through structured creativity and advanced digital strategy.</p>
-                            </div>
-                            <div class="bg-gray-50 rounded-lg p-6 border-l-4 border-secondary">
-                                <h3 class="font-bold text-gray-800 mb-2">The Method</h3>
-                                <p class="text-sm text-gray-600">Fusing the structured creativity of Hip-Hop with AI literacy and sustainability to drive community empowerment via V2G&trade; systems.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-gray-900 px-8 py-6 text-white flex flex-col sm:flex-row justify-between items-center">
-                        <div>
-                            <p class="font-semibold text-lg">Director of Philanthropy and Global Partnerships (GVI)</p>
-                            <p class="text-gray-400 text-sm">Designated leadership for sustainable global impact, 2026</p>
-                        </div>
-                        <button onclick="switchView('ai-navigator')" class="mt-4 sm:mt-0 bg-accent hover:bg-orange-700 text-white font-bold py-2 px-6 rounded-full transition duration-300 shadow-lg transform hover:-translate-y-1">
-                            ✨ Consult BALANCER-11
-                        </button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                    <a href="https://www.youtube.com/watch?v=WNX4u5Zl-y4&t=50s" target="_blank" class="card bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center block hover:border-accent group">
-                        <div class="text-4xl mb-3">🌍</div>
-                        <h3 class="font-bold text-lg mb-2 group-hover:text-accent">Global HipHop Ambassador</h3>
-                        <p class="text-sm text-gray-500">Connecting global landscapes through the high-value literacy of HipHop culture.</p>
-                    </a>
-                    <a href="https://www.youtube.com/shorts/wO4YUVy8ICU" target="_blank" class="card bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center block hover:border-accent group">
-                        <div class="text-4xl mb-3">💧</div>
-                        <h3 class="font-bold text-lg mb-2 group-hover:text-accent">300 Water Bearers</h3>
-                        <p class="text-sm text-gray-500">A collective movement to bring water to global landscapes one by one.</p>
-                    </a>
-                    <a href="https://www.theinvenitycosmic.com" target="_blank" class="card bg-white p-6 rounded-lg shadow-sm border border-gray-100 text-center block hover:border-accent group">
-                        <div class="text-4xl mb-3">🤖</div>
-                        <h3 class="font-bold text-lg mb-2 group-hover:text-accent">AI Navigator</h3>
-                        <p class="text-sm text-gray-500">Creator of The Invenity Cosmic Universe for AI and digital literacy.</p>
-                    </a>
-                </div>
-            </section>
-
-            <!-- VIEW 2: CORE COMPETENCIES -->
-            <section id="view-competencies" class="view-section hidden">
-                <div class="mb-8">
-                    <h2 class="text-3xl font-bold text-gray-900 leading-tight">Strategic Value Matrix</h2>
-                    <p class="mt-2 text-gray-600 max-w-3xl">
-                        What Mr. Sheppard brings to the table goes beyond skills—it is **Strategic Translation**. For companies and institutions, this synthesis creates high-level cultural equity and operational resilience.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    <div class="lg:col-span-7 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                        <h3 class="text-lg font-bold text-primary mb-4 flex items-center">
-                            <span class="mr-2">📈</span> Market Impact & Strategic Horizon Map
-                        </h3>
-                        <div class="chart-container">
-                            <canvas id="skillsChart"></canvas>
-                        </div>
-                        <p class="text-xs text-gray-400 mt-4 italic text-center">
-                            Values represent research-backed potential for corporate ESG, Market Penetration, and Future-Proofing.
-                        </p>
-                    </div>
-
-                    <div class="lg:col-span-5 space-y-4">
-                        <div id="value-box" class="bg-primary text-white p-6 rounded-2xl shadow-lg border-l-8 border-accent transition-all duration-500 min-h-[300px] flex flex-col justify-center">
-                            <h3 class="text-xl font-bold mb-4" id="v-title">Select a Core Competency</h3>
-                            <div id="v-content" class="space-y-4">
-                                <p class="text-sm text-gray-300">Click or hover on a competency list item to see how Dwayne's current work translates to corporate value and potential scale.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-8">
-                    <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:border-accent group transition" onmouseover="updateValue(0)" onclick="updateValue(0)">
-                        <h4 class="font-bold text-sm text-gray-800 group-hover:text-accent">Civic Strategy</h4>
-                    </div>
-                    <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:border-accent group transition" onmouseover="updateValue(1)" onclick="updateValue(1)">
-                        <h4 class="font-bold text-sm text-gray-800 group-hover:text-accent">AI Literacy</h4>
-                    </div>
-                    <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:border-accent group transition" onmouseover="updateValue(2)" onclick="updateValue(2)">
-                        <h4 class="font-bold text-sm text-gray-800 group-hover:text-accent">Global Diplomacy</h4>
-                    </div>
-                    <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:border-accent group transition" onmouseover="updateValue(3)" onclick="updateValue(3)">
-                        <h4 class="font-bold text-sm text-gray-800 group-hover:text-accent">Creative Systems</h4>
-                    </div>
-                    <div class="p-4 bg-white rounded-xl shadow-sm border border-gray-100 cursor-pointer hover:border-accent group transition" onmouseover="updateValue(4)" onclick="updateValue(4)">
-                        <h4 class="font-bold text-sm text-gray-800 group-hover:text-accent">Curriculum Dev</h4>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VIEW 3: GLOBAL REACH & 300 WATER BEARERS -->
-            <section id="view-global" class="view-section hidden">
-                <div class="mb-8">
-                    <h2 class="text-3xl font-bold text-gray-900 leading-tight">Global Reach & <span class="text-accent">The 300 Water Bearers</span></h2>
-                    <p class="mt-2 text-gray-600 max-w-3xl">
-                        V is the 1st of 300 water bearers. We are bringing water to global landscapes one by one. Will you be one of the remaining 299?
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <div class="lg:col-span-7 space-y-6">
-                        <div class="bg-white rounded-2xl shadow-sm border-2 border-accent p-8 relative overflow-hidden">
-                            <div class="absolute top-0 right-0 p-4 flex flex-col items-end space-y-2">
-                                <span class="bearer-badge text-white px-3 py-1 rounded-full text-xs font-bold uppercase">Mission: Nahuce</span>
-                            </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-4">The Call to Action</h3>
-                            <p class="text-gray-600 mb-6 leading-relaxed">
-                                Become a tiered partner in the **GVI Collective** to tap into the works of V and the Global Village Initiative. Join the ranks of the 300 Water Bearers and support infrastructure required to bring clean water to landscapes in need.
-                            </p>
-                            
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                    <h4 class="font-bold text-accent mb-1">Exclusive Content</h4>
-                                    <p class="text-xs text-gray-500">Music, BTS imagery, and V2G&trade; field research from global tours.</p>
-                                </div>
-                                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                    <h4 class="font-bold text-secondary mb-1">The School That Never Closes</h4>
-                                    <p class="text-xs text-gray-500">Access learning tools and civic intelligence frameworks.</p>
-                                </div>
-                                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                    <h4 class="font-bold text-highlight mb-1">Nahuce Updates</h4>
-                                    <p class="text-xs text-gray-500">Direct communication on development progress in Nigeria.</p>
-                                </div>
-                                <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                                    <h4 class="font-bold text-primary mb-1">Impact Participation</h4>
-                                    <p class="text-xs text-gray-500">Be part of the process as we build 1 x 1.</p>
-                                </div>
-                            </div>
-
-                            <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
-                                <a href="https://www.NAHUCEGVI.org" target="_blank" class="flex-grow text-center bearer-badge text-white py-4 rounded-xl font-bold text-lg hover:opacity-90 transition shadow-lg">
-                                    LEARN MORE and FOLLOW &rarr;
-                                </a>
-                                <a href="https://www.youtube.com/shorts/wO4YUVy8ICU" target="_blank" class="sm:w-1/3 text-center bg-gray-900 text-white py-4 rounded-xl font-bold text-lg hover:bg-black transition shadow-lg flex items-center justify-center">
-                                    <span class="mr-2">🎥</span> Watch
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="lg:col-span-5 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-900 mb-2">Diplomatic Footprint</h3>
-                            <p class="text-sm text-gray-500 mb-6">Engagement intensity across the GVI network.</p>
-                            <div class="chart-container">
-                                <canvas id="globalChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="mt-6 p-4 bg-primary text-white rounded-xl">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-medium">Water Bearer Progress</span>
-                                <span class="text-xs opacity-75">1 / 300</span>
-                            </div>
-                            <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden">
-                                <div class="bg-accent h-full" style="width: 1%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VIEW 4: CREATIVE ECOSYSTEM -->
-            <section id="view-ecosystem" class="view-section hidden">
-                <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center">
-                    <div>
-                        <h2 class="text-3xl font-bold text-gray-900">Creative Ecosystem</h2>
-                        <p class="mt-2 text-gray-600">
-                            A curated catalog of V2G&trade; architectural platforms, research series, and educational systems.
-                        </p>
-                    </div>
-                    <div class="mt-4 md:mt-0 flex space-x-2">
-                        <button onclick="filterProjects('all')" class="filter-btn active px-3 py-1 text-sm rounded-full bg-gray-800 text-white">All</button>
-                        <button onclick="filterProjects('system')" class="filter-btn px-3 py-1 text-sm rounded-full bg-white border border-gray-200 text-gray-600">Systems</button>
-                        <button onclick="filterProjects('media')" class="filter-btn px-3 py-1 text-sm rounded-full bg-white border border-gray-200 text-gray-600">Media</button>
-                        <button onclick="filterProjects('edu')" class="filter-btn px-3 py-1 text-sm rounded-full bg-white border border-gray-200 text-gray-600">Education</button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="project-grid">
-                    <!-- Projects injected via JS -->
-                </div>
-            </section>
-
-            <!-- VIEW 5: DIGITAL & AI -->
-            <section id="view-digital" class="view-section hidden">
-                <div class="mb-8">
-                    <h2 class="text-3xl font-bold text-gray-900">Digital Literacy & AI</h2>
-                    <p class="mt-2 text-gray-600 max-w-3xl">
-                        Documenting the results of digital consistency and AI advocacy using the V2G&trade; methodology.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-indigo-500">
-                        <div class="text-gray-500 text-sm font-medium uppercase">Monthly Impressions</div>
-                        <div class="text-4xl font-bold text-gray-900 mt-2">30,000+</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-pink-500">
-                        <div class="text-gray-500 text-sm font-medium uppercase">Engaged Followers</div>
-                        <div class="text-4xl font-bold text-gray-900 mt-2">2,500+</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border-t-4 border-blue-500">
-                        <div class="text-gray-500 text-sm font-medium uppercase">Challenge</div>
-                        <div class="text-xl font-bold text-gray-900 mt-2">Metricool 365</div>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="text-lg font-bold text-gray-800 mb-4">Growth Trajectory (365 Challenge)</h3>
-                    <div class="chart-container">
-                        <canvas id="digitalChart"></canvas>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VIEW 6: ✨ AI NAVIGATOR -->
-            <section id="view-ai-navigator" class="view-section hidden">
-                <div class="mb-8">
-                    <h2 class="text-3xl font-bold text-gray-900">✨ AI Navigator</h2>
-                    <p class="mt-2 text-gray-600 max-w-3xl">
-                        Interact with Dwayne L. Sheppard's body of work through **BALANCER-11**, generate custom civic intelligence strategies powered by <strong>Gemini 2.5</strong>.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Tool 1: Chat Assistant -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col h-[550px] ai-glow">
-                        <div class="p-4 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
-                            <div class="flex items-center">
-                                <span class="text-2xl mr-2">🎙️</span>
-                                <div>
-                                    <h3 class="font-bold text-gray-900">Ask BALANCER-11</h3>
-                                    <p class="text-xs text-gray-500">Dwayne's AI Assistant</p>
-                                </div>
-                            </div>
-                            <span class="text-[10px] font-bold bg-accent text-white px-2 py-0.5 rounded-full uppercase">Powered by Gemini</span>
-                        </div>
-                        <div id="chat-box" class="flex-grow p-4 overflow-y-auto space-y-4 text-sm scroll-smooth">
-                            <div class="bg-gray-100 p-3 rounded-lg mr-8 leading-relaxed text-gray-700">
-                                I am **BALANCER-11**, the AI Assistant for Dwayne L. Sheppard. I am here to help you navigate his global tours, philanthropy, and V2G&trade; systems. <br><br>
-                                <span class="font-bold text-accent">Notice:</span> AI can experience errors. Please perform your own research and due diligence. All professional questions and strategic confirmations should be verified directly with **V** at <a href="https://www.v2gmultimedia.com/contact-me" target="_blank" class="underline hover:text-primary">v2gmultimedia.com/contact-me</a>.
-                            </div>
-                        </div>
-                        <div class="p-4 border-t border-gray-100 flex space-x-2">
-                            <input type="text" id="chat-input" placeholder="Consult BALANCER-11..." class="flex-grow border rounded-full px-4 py-2 focus:ring-2 focus:ring-accent outline-none text-sm">
-                            <button onclick="handleChat()" id="chat-btn" class="bg-accent text-white px-4 py-2 rounded-full font-bold hover:bg-orange-700 transition">Send</button>
-                        </div>
-                    </div>
-
-                    <!-- Tool 2: Architect Tool -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 ai-glow flex flex-col h-[550px]">
-                        <div class="mb-4">
-                            <h3 class="text-xl font-bold text-gray-900 flex items-center">
-                                <span class="mr-2">🧱</span> Civic Intelligence ✨ Architect
-                            </h3>
-                            <p class="text-sm text-gray-500">Describe a community challenge; BALANCER-11 will draft a strategy.</p>
-                        </div>
-                        <textarea id="architect-input" class="w-full border rounded-xl p-4 flex-grow mb-4 text-sm focus:ring-2 focus:ring-accent outline-none resize-none" placeholder="e.g. My neighborhood needs a way to engage youth in local history..."></textarea>
-                        
-                        <div class="flex space-x-2">
-                            <button onclick="handleArchitect()" id="architect-btn" class="flex-grow bg-primary text-white py-3 rounded-xl font-bold hover:bg-gray-800 transition shadow-md mb-4">
-                                ✨ Generate Strategy
-                            </button>
-                            <button onclick="generateSpitNarrative()" id="spit-btn" class="bg-accent text-white px-4 py-3 rounded-xl font-bold hover:bg-orange-700 transition shadow-md mb-4" title="Generate Moment to Spit Narrative">
-                                ✨ Spit
-                            </button>
-                        </div>
-
-                        <div id="architect-result" class="bg-gray-50 border rounded-xl p-4 overflow-y-auto max-h-40 text-sm hidden"></div>
-                        <div id="audio-container" class="mt-4 hidden">
-                             <button id="tts-play-btn" onclick="playCurrentNarrative()" class="w-full flex items-center justify-center bg-secondary text-white py-2 rounded-lg font-bold hover:bg-blue-700 transition">
-                                 <span class="mr-2">🔊</span> ✨ Play Audio Vision
-                             </button>
-                             <audio id="tts-audio" class="hidden"></audio>
-                        </div>
-                        
-                        <div class="mt-4 p-3 bg-red-50 border border-red-100 rounded-lg text-[10px] text-red-800 leading-tight">
-                            <strong>AI & DUE DILIGENCE:</strong> BALANCER-11 is a generative tool and can produce errors. Do not rely solely on AI output for critical strategy. Verify all findings via <a href="https://www.v2gmultimedia.com/contact-me" target="_blank" class="font-bold underline">Official Contact</a>.
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer class="bg-white border-t border-gray-200 mt-auto">
-            <div class="max-w-7xl auto py-8 px-4 flex flex-col md:flex-row justify-between items-center">
-                <div class="text-center md:text-left">
-                    <p class="text-base text-gray-500">&copy; 2026 Dwayne L. Sheppard (Venomous2000). V2G&trade; Trademark.</p>
-                    <p class="text-xs text-gray-400 uppercase tracking-widest flex items-center">
-                        Director of Philanthropy and Global Partnerships (GVI) 
-                        <span class="ml-2 border-l border-gray-300 pl-2">DRIP CERTIFIED</span>
-                    </p>
-                </div>
-                <div class="flex space-x-6 text-gray-500 mt-4 md:mt-0">
-                    <a href="https://www.V2Gmultimedia.com" target="_blank" class="hover:text-accent transition flex items-center">
-                        <span class="mr-1 text-lg">🎬</span> V2G&trade;
-                    </a>
-                    <a href="https://www.v2gmultimedia.com/contact-me" target="_blank" class="hover:text-accent transition flex items-center">
-                        <span class="mr-1 text-lg">✉️</span> Contact V
-                    </a>
-                    <a href="https://www.NAHUCEGVI.org" target="_blank" class="hover:text-accent transition flex items-center">
-                        <span class="mr-1 text-lg">🌐</span> NAHUCEGVI
-                    </a>
-                </div>
+            <div class="flex space-x-6 text-gray-500 mt-4 md:mt-0">
+                <a href="https://www.V2Gmultimedia.com" target="_blank" class="hover:text-accent transition flex items-center">
+                    <span class="mr-1 text-lg">🎬</span> V2G&trade;
+                </a>
+                <a href="https://www.v2gmultimedia.com/contact-me" target="_blank" class="hover:text-accent transition flex items-center">
+                    <span class="mr-1 text-lg">✉️</span> Contact V
+                </a>
+                <a href="https://www.NAHUCEGVI.org" target="_blank" class="hover:text-accent transition flex items-center">
+                    <span class="mr-1 text-lg">🌐</span> NAHUCEGVI
+                </a>
             </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
     <script>
         const state = {
@@ -655,17 +621,6 @@
             renderProjects('all');
             updateValue(0); 
         });
-
-        function enterApp() {
-            const splash = document.getElementById('splash-screen');
-            const main = document.getElementById('main-content');
-            splash.style.opacity = '0';
-            setTimeout(() => {
-                splash.style.display = 'none';
-                main.classList.remove('invisible');
-                main.classList.add('opacity-100');
-            }, 800);
-        }
 
         function switchView(viewName) {
             state.currentView = viewName;
@@ -799,6 +754,7 @@
             }
         }
 
+        // PCM16 to WAV conversion for TTS
         function pcmToWav(pcmData, sampleRate = 24000) {
             const buffer = new ArrayBuffer(44 + pcmData.length * 2);
             const view = new DataView(buffer);
@@ -880,7 +836,7 @@
             const aiResponse = await callGemini(userMsg);
             chatBox.removeChild(loadingDiv);
             const aiDiv = document.createElement('div');
-            aiDiv.className = 'bg-gray-100 p-3 rounded-lg mr-8 whitespace-pre-line text-gray-800';
+            aiDiv.className = 'bg-gray-100 p-3 rounded-lg mr-8 whitespace-pre-line';
             aiDiv.textContent = aiResponse;
             chatBox.appendChild(aiDiv);
             chatBox.scrollTop = chatBox.scrollHeight;
@@ -901,7 +857,7 @@
             const architectPrompt = `As a Civic Intelligence Strategist, architect a framework for: "${query}". Include a "Cultural Hook", "Digital Leverage", and explain how the "300 Water Bearers" initiative at www.NAHUCEGVI.org could scale this impact. Mention DRIP status.`;
             const response = await callGemini(architectPrompt);
             state.lastNarrative = response;
-            resultBox.innerHTML = `<div class="prose prose-sm max-w-none text-gray-800"><h4 class="font-bold text-accent mb-2">Strategy Proposal</h4><div class="whitespace-pre-line">${response}</div></div>`;
+            resultBox.innerHTML = `<div class="prose prose-sm max-w-none"><h4 class="font-bold text-accent mb-2">Strategy Proposal</h4><div class="whitespace-pre-line">${response}</div></div>`;
             btn.disabled = false;
             btn.innerHTML = '✨ Generate Strategy';
             audioContainer.classList.remove('hidden');
@@ -921,7 +877,7 @@
             const spitPrompt = `Generate a high-value literacy storytelling piece in the style of "A Moment To Spit". Use deep prose, AI-inspired visual metaphors, and a powerful civic call to action regarding: "${query}".`;
             const response = await callGemini(spitPrompt);
             state.lastNarrative = response;
-            resultBox.innerHTML = `<div class="prose prose-sm max-w-none text-gray-800"><h4 class="font-bold text-primary mb-2 italic">✨ A Moment To Spit</h4><div class="whitespace-pre-line italic text-gray-700">${response}</div></div>`;
+            resultBox.innerHTML = `<div class="prose prose-sm max-w-none"><h4 class="font-bold text-primary mb-2 italic">✨ A Moment To Spit</h4><div class="whitespace-pre-line italic text-gray-700">${response}</div></div>`;
             btn.disabled = false;
             audioContainer.classList.remove('hidden');
         }
@@ -933,7 +889,7 @@
             playBtn.disabled = true;
             playBtn.innerHTML = '✨ Converting to Voice...';
             
-            const audioUrl = await callGeminiTTS(state.lastNarrative.substring(0, 500)); 
+            const audioUrl = await callGeminiTTS(state.lastNarrative.substring(0, 500)); // Limit to first 500 chars for speed
             if (audioUrl) {
                 audioEl.src = audioUrl;
                 audioEl.classList.remove('hidden');
